@@ -19,6 +19,11 @@ class CrawlerCommand extends Command {
 
   protected function execute(InputInterface $input, OutputInterface $output) {
     $output->writeln('Hello');
+
+    $repo = $this->getApplication()->get('doctrine_mongodb')->getRepository('AppBundle:Location');
+    $list = $repo->findAll();
+
+    $output->writeln('Found: ' . count($list));
   }
 
 }

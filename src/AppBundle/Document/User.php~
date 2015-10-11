@@ -1,0 +1,39 @@
+<?php
+/**
+ * @file
+ */
+
+namespace AppBundle\Document;
+
+use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+
+/**
+ * Class User
+ * @package AppBundle\Entity
+ * @MongoDB\Document
+ */
+class User extends BaseUser {
+
+  /**
+   * @MongoDB\Id(strategy="auto")
+   * @var int
+   */
+  protected $id;
+
+  public function __construct() {
+    parent::__construct();
+  }
+
+
+
+    /**
+     * Get id
+     *
+     * @return id $id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}

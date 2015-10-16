@@ -5,11 +5,11 @@
 
 namespace AppBundle\Console;
 
-use Symfony\Component\Console\Command\Command;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CrawlerCommand extends Command {
+class CrawlerCommand extends ContainerAwareCommand {
 
   protected function configure() {
     $this
@@ -20,7 +20,7 @@ class CrawlerCommand extends Command {
   protected function execute(InputInterface $input, OutputInterface $output) {
     $output->writeln('Hello');
 
-    $repo = $this->getApplication()->get('doctrine_mongodb')->getRepository('AppBundle:Location');
+    $repo = $this->getContainer()->get('doctrine_mongodb')->getRepository('AppBundle:Location');
     $list = $repo->findAll();
 
     $output->writeln('Found: ' . count($list));

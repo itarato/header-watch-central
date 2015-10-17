@@ -41,9 +41,9 @@ class DefaultController extends Controller {
 
     if ($form->isValid()) {
       // Add record.
-      $dm = $this->get('doctrine_mongodb')->getManager();
-      $dm->persist($location);
-      $dm->flush();
+      $om = $this->get('doctrine_mongodb')->getManager();
+      $om->persist($location);
+      $om->flush();
     }
 
     return $this->render('default/create_location.html.twig', ['form' => $form->createView()]);

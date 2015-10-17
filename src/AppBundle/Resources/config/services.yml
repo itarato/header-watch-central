@@ -1,3 +1,7 @@
 services:
+  app_bundle.location.factory:
+    class: AppBundle\Factory\LocationFactory
+
   app_bundle.crawler.provider:
     class: AppBundle\Crawler\CrawlerProvider
+    arguments: [@app_bundle.location.factory]

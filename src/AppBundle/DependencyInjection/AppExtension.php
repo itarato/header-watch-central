@@ -12,6 +12,8 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class AppExtension extends Extension {
 
+  const APP_BUNDLE_CRAWLER_CAPACITY = 'app_bundle.crawler.capacity';
+
   /**
    * Loads a specific configuration.
    *
@@ -29,10 +31,12 @@ class AppExtension extends Extension {
     $configuration = new Configuration();
     $data = $this->processConfiguration($configuration, $config);
 
-    $crawlerProvider = $container->get('app_bundle.crawler.provider');
+    $crawlerProviderDefinition = $container->getDefinition('app_bundle.crawler.provider');
     foreach ($data['crawlers'] as $crawler) {
-      $crawlerProvider->register($crawler['address'], $crawler['port']);
+      $crawlerProviderDefinition->addMethodCall('register', [$crawler['address'], $crawler['port']]);
     }
+
+    $container->setParameter(self::APP_BUNDLE_CRAWLER_CAPACITY, $data['capacity']);
   }
 
 }

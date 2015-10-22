@@ -8,6 +8,7 @@ services:
 
   app_bundle.crawler.operator:
     class: AppBundle\Crawler\CrawlerOperator
+    arguments: [@service_container]
 
   app_bundle.crawler.dispatcher:
     class: AppBundle\Crawler\CrawlerDispatcher

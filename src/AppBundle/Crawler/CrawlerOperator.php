@@ -5,11 +5,23 @@
 
 namespace AppBundle\Crawler;
 
+use AppBundle\Document\CrawlResult;
 use AppBundle\Document\Location;
 use AppBundle\Entity\CrawlerEntity;
+use Doctrine\Common\Persistence\ObjectManager;
 use GuzzleHttp\Client;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class CrawlerOperator {
+
+  /**
+   * @var ObjectManager
+   */
+  private $dm;
+
+  public function __construct(ContainerInterface $container) {
+    $this->dm = $container->get('doctrine_mongodb')->getManager();
+  }
 
   /**
    * @param \AppBundle\Entity\CrawlerEntity $crawlerEntity
@@ -30,7 +42,20 @@ class CrawlerOperator {
     ]);
     $responseJSON = $response->getBody()->getContents();
     $responseArray = json_decode($responseJSON, JSON_OBJECT_AS_ARRAY);
-//    var_dump($responseArray);
+
+    foreach ($responseArray['locations'] as $locationResult) {
+      $resultDocument = new CrawlResult();
+      $resultDocument
+        ->setLocationId($locationResult['id'])
+        ->setResult($locationResult)
+        ->setTime(time());
+
+      $this->dm->persist($resultDocument);
+    }
+  }
+
+  public function __destruct() {
+    $this->dm->flush();
   }
 
 }

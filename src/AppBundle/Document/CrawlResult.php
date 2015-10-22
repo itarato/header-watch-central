@@ -38,4 +38,52 @@ class CrawlResult {
    */
   protected $time;
 
+  /**
+   * @return string
+   */
+  public function getLocationId() {
+    return $this->location_id;
+  }
+
+  /**
+   * @param string $location_id
+   * @return $this
+   */
+  public function setLocationId($location_id) {
+    $this->location_id = $location_id;
+    return $this;
+  }
+
+  /**
+   * @return object
+   */
+  public function getResult() {
+    return $this->result;
+  }
+
+  /**
+   * @param object $result
+   * @return $this
+   */
+  public function setResult($result) {
+    $this->result = $result;
+    return $this;
+  }
+
+  /**
+   * @return int
+   */
+  public function getTime() {
+    return $this->time;
+  }
+
+  /**
+   * @param int $time
+   * @return $this
+   */
+  public function setTime($time) {
+    $this->time = $time;
+    return $this;
+  }
+
 }

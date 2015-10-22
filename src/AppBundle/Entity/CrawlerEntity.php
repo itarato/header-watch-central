@@ -5,6 +5,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Document\Location;
 use AppBundle\IdentifiableInterface;
 
 class CrawlerEntity implements IdentifiableInterface {
@@ -52,5 +53,13 @@ class CrawlerEntity implements IdentifiableInterface {
   public function getID() {
     return md5($this->address . ':' . $this->port);
   }
+
+//  /**
+//   * @param \AppBundle\Document\Location $location
+//   * @todo think about having a dedicated controller class, this is storage
+//   */
+//  public function crawl(Location $location) {
+//
+//  }
 
 }

@@ -32,4 +32,10 @@ class CrawlResult {
    */
   protected $result;
 
+  /**
+   * @MongoDB\Int()
+   * @var int
+   */
+  protected $time;
+
 }

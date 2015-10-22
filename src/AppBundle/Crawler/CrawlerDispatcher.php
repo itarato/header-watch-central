@@ -6,6 +6,8 @@
 namespace AppBundle\Crawler;
 
 use AppBundle\DependencyInjection\AppExtension;
+use AppBundle\Document\Location;
+use AppBundle\Util\ArrayUtil;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -50,7 +52,7 @@ class CrawlerDispatcher {
 
   public function execute() {
     // get due locations
-    $dueLocations = $this->getDueLocations();
+    $dueLocations = ArrayUtil::walkKeyForLocation($this->getDueLocations());
 
     // get available crawlers
     $availableCrawlerNum = $this->crawlerProvider->countAvailable();
@@ -72,7 +74,7 @@ class CrawlerDispatcher {
   }
 
   /**
-   * @return object[]
+   * @return Location[]
    */
   protected function getDueLocations() {
     $it = $this->dm

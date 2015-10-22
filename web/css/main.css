@@ -1,0 +1,29 @@
+hr {
+  margin: 0 !important;
+  padding: 0 !important; }
+
+nav {
+  background-color: #eee;
+  border-bottom: 1px solid #ddd; }
+  nav:after {
+    content: ".";
+    clear: both;
+    visibility: hidden;
+    display: block;
+    height: 0; }
+  nav h1 {
+    float: left;
+    margin: 6px;
+    padding: 0; }
+  nav ul {
+    float: right;
+    margin-top: 16px; }
+    nav ul li {
+      float: left;
+      list-style: none;
+      padding-right: 12px; }
+
+#page {
+  margin: 24px 64px; }
+
+/*# sourceMappingURL=main.css.map */

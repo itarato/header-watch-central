@@ -1,13 +1,29 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+  <meta charset="UTF-8"/>
+  <title>{% block title %}Welcome!{% endblock %} | Header Watch</title>
+  <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+  <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
+  <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet"/>
+  <link href="{{ asset('bootstrap/css/bootstrap-theme.min.css') }}" rel="stylesheet"/>
+</head>
+<body>
+
+<nav>
+  <h1>Header Watch</h1>
+  <ul>
+    <li><a href="{{ path('homepage') }}">Home</a></li>
+    <li><a href="{{ path('location_list') }}">My locations</a></li>
+    <li><a href="{{ path('location_create') }}">Add new location</a></li>
+  </ul>
+</nav>
+
+<div id="page">
+  {% block body %}{% endblock %}
+</div>
+
+{% block javascripts %}{% endblock %}
+
+</body>
 </html>

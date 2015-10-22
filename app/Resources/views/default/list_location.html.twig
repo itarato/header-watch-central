@@ -1,7 +1,11 @@
-<h1>Locations</h1>
+{% extends 'base.html.twig' %}
 
-<ul>
-{% for location in locations %}
-  <li>{{ location.path }}</li>
-{% endfor %}
-</ul>
+{% block body %}
+  <h1>Locations</h1>
+
+  <ul>
+    {% for location in locations %}
+      <li>{{ location.path }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

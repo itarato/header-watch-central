@@ -7,7 +7,7 @@ namespace AppBundle\Entity;
 
 use AppBundle\IdentifiableInterface;
 
-class LocationEntity implements IdentifiableInterface {
+class CrawlerEntity implements IdentifiableInterface {
 
   private $address;
 

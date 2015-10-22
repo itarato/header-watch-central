@@ -6,7 +6,6 @@
 namespace AppBundle\Console;
 
 use AppBundle\DependencyInjection\AppExtension;
-use AppBundle\Document\CrawlerAvailability;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -30,16 +29,9 @@ class CrawlerCommand extends ContainerAwareCommand {
     $list = $repo->findAll();
 
     $output->writeln('Found: ' . count($list));
-//
-//    $ca = new CrawlerAvailability();
-//    $ca
-//      ->setStartAt(time())
-//      ->setServerId('abc')
-//      ->setLocations(['abc', 'def', 'ghi']);
-//
-//    $om = $this->getContainer()->get('doctrine_mongodb')->getManager();
-//    $om->persist($ca);
-//    $om->flush();
+
+    $dispatcher = $this->getContainer()->get('app_bundle.crawler.dispatcher');
+    $dispatcher->execute();
   }
 
 }

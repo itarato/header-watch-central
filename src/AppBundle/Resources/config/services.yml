@@ -5,3 +5,12 @@ services:
   app_bundle.crawler.provider:
     class: AppBundle\Crawler\CrawlerProvider
     arguments: [@app_bundle.location.factory]
+
+  app_bundle.crawler.operator:
+    class: AppBundle\Crawler\CrawlerOperator
+
+  app_bundle.crawler.dispatcher:
+    class: AppBundle\Crawler\CrawlerDispatcher
+    factory_class: AppBundle\Crawler\CrawlerDispatcher
+    factory_method: 'create'
+    arguments: [@service_container]

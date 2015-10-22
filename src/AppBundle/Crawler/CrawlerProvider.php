@@ -42,7 +42,12 @@ class CrawlerProvider implements CrawlerProviderInterface {
   }
 
   public function get($count = 1) {
-    // TODO: Implement get() method.
+    // @todo select only the available ones
+    $out = [];
+    foreach ($this->items as $item) {
+      $out[] = $item;
+    }
+    return $out;
   }
 
   public function __construct(LocationFactory $locationFactory) {

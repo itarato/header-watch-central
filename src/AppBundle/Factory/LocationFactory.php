@@ -5,14 +5,14 @@
 
 namespace AppBundle\Factory;
 
-use AppBundle\Entity\LocationEntity;
+use AppBundle\Entity\CrawlerEntity;
 
 class LocationFactory implements IdentifiableFactoryInterface {
 
   /**
    * @param $address
    * @param $host
-   * @return \AppBundle\Entity\LocationEntity
+   * @return \AppBundle\Entity\CrawlerEntity
    * @throws \Exception
    */
   public function create($address = NULL, $host = NULL) {
@@ -20,7 +20,7 @@ class LocationFactory implements IdentifiableFactoryInterface {
       throw new \Exception('Missing arguments.');
     }
 
-    return new LocationEntity($address, $host);
+    return new CrawlerEntity($address, $host);
   }
 
 }

@@ -5,6 +5,7 @@
 
 namespace AppBundle\Crawler;
 
+use AppBundle\DependencyInjection\AppExtension;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -26,23 +27,53 @@ class CrawlerDispatcher {
    */
   private $dm;
 
+  /**
+   * @var int
+   */
+  private $capacity;
+
+  /**
+   * @var CrawlerOperator
+   */
+  private $crawlerOperator;
+
   public static function create(ContainerInterface $container) {
     $instance = new CrawlerDispatcher();
     $instance->crawlerProvider = $container->get('app_bundle.crawler.provider');
     $instance->storageManagerRegistry = $container->get('doctrine_mongodb');
     $instance->dm = $container->get('doctrine_mongodb.odm.document_manager');
+    $instance->capacity = $container->getParameter(AppExtension::APP_BUNDLE_CRAWLER_CAPACITY);
+    $instance->crawlerOperator = $container->get('app_bundle.crawler.operator');
+
     return $instance;
   }
 
   public function execute() {
     // get due locations
-    $inProgress = $this->getInProgressLocationIDs();
-    $locationRepo = $this->storageManagerRegistry->getRepository('AppBundle:LocationEntity');
-    $this->dm->createQueryBuilder('AppBundle:LocationEntity');
+    $dueLocations = $this->getDueLocations();
+
     // get available crawlers
-    // loop through crawlers and add 10-10 locations
+    $availableCrawlerNum = $this->crawlerProvider->countAvailable();
+    $neededCrawlers = min($availableCrawlerNum, ceil(count($dueLocations) / $this->capacity));
+
+    $availableCrawlers = $this->crawlerProvider->get($neededCrawlers);
+    for ($i = 0; $i < $neededCrawlers; $i++) {
+      $locationPortion = array_slice($dueLocations, 0, $this->capacity);
+      if (empty($locationPortion)) {
+        break;
+      }
+
+      if (!($crawler = array_pop($availableCrawlers))) {
+        break;
+      }
+
+      $this->crawlerOperator->crawl($crawler, $locationPortion);
+    }
   }
 
+  /**
+   * @return object[]
+   */
   protected function getDueLocations() {
     $it = $this->dm
       ->createQueryBuilder('AppBundle:Location')
@@ -70,10 +101,10 @@ class CrawlerDispatcher {
 
     $ids = [];
     foreach ($availibilityInfos as $availibilityInfo) {
-      $a = 1;
+      $ids = array_merge($ids, $availibilityInfo->getLocations());
     }
 
-    return [];
+    return array_unique($ids);
   }
 
 }

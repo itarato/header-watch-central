@@ -66,4 +66,25 @@ class CrawlerAvailability {
     return $this;
   }
 
+  /**
+   * @return \string[]
+   */
+  public function getLocations() {
+    return $this->locations;
+  }
+
+  /**
+   * @return int
+   */
+  public function getStartAt() {
+    return $this->start_at;
+  }
+
+  /**
+   * @return string
+   */
+  public function getServerId() {
+    return $this->server_id;
+  }
+
 }

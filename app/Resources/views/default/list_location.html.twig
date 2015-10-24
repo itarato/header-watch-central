@@ -5,7 +5,7 @@
 
   <ul>
     {% for location in locations %}
-      <li>{{ location.path }}</li>
+      <li><a href="{{ path('location_results', {'location_id': location.id}) }}">{{ location.path }}</a></li>
     {% endfor %}
   </ul>
 {% endblock %}

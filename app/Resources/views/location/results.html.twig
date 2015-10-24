@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <h1>Results for: {{ location.path }}</h1>
+
+  <table class="table table-stripped">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Result</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for result in results %}
+        <tr>
+          <td>
+            {{ result.time|date }}
+          </td>
+          <td>
+            <ul>
+              {% for key, value in result.result.headers %}
+                <li><strong>{{ key }} = </strong>{{ value|join(' | ') }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

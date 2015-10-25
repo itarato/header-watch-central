@@ -15,3 +15,8 @@ services:
     factory_class: AppBundle\Crawler\CrawlerDispatcher
     factory_method: 'create'
     arguments: [@service_container]
+
+  app_bundle.listener.routing_parameter:
+    class: AppBundle\EventListener\RoutingParameterListener
+    tags:
+      - { name: kernel.event_subscriber }
